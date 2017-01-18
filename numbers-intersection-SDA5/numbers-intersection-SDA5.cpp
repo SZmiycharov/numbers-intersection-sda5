@@ -44,7 +44,7 @@ void quickSort(int(&arr)[100], int left, int right)
 		quickSort(arr, i, right);
 }
 
-int* getIntersection(int* arr1, int* arr2, int size1, int size2, int &testSize)
+int* getIntersection(int* arr1, int* arr2, int size1, int size2, int &hashSize)
 {
 	int i = 0, j = 0;
 	int arr[100];
@@ -54,8 +54,8 @@ int* getIntersection(int* arr1, int* arr2, int size1, int size2, int &testSize)
 		if (arr1[i] == arr2[j])
 		{
 			cout << arr1[i] << " HA: ";
-			arr[testSize] = arr1[i];
-			++testSize;
+			arr[hashSize] = arr1[i];
+			++hashSize;
 			++i;
 			++j;
 		}
@@ -73,158 +73,152 @@ int* getIntersection(int* arr1, int* arr2, int size1, int size2, int &testSize)
 
 int main(int argc, char* argv[])
 {
-	LinearProbingHash test(10007);
+	LinearProbingHash hash(10007);
 
-	cout << "adding 1 5" << endl;
-	test.Add(1, 5);
-	cout << test.GetValue(1) << endl;
-	test.IncrementValue(1);
-	cout << test.GetValue(1) << endl;
-	test.IncrementValue(1);
-	cout << test.GetValue(1) << endl;
-	test.IncrementValue(1);
-	cout << test.GetValue(1) << endl;
+	/*cout << "adding 1 5" << endl;
+	hash.Add(1, 5);
+	cout << hash.GetValue(1) << endl;
+	hash.IncrementValue(1);
+	cout << hash.GetValue(1) << endl;
+	hash.IncrementValue(1);
+	cout << hash.GetValue(1) << endl;
+	hash.IncrementValue(1);
+	cout << hash.GetValue(1) << endl;
 
 	cout << "adding 2 1" << endl;
-	test.Add(2, 1);
-	cout << test.GetValue(2) << endl;
-	test.IncrementValue(2);
-	cout << test.GetValue(2) << endl;
+	hash.Add(2, 1);
+	cout << hash.GetValue(2) << endl;
+	hash.IncrementValue(2);
+	cout << hash.GetValue(2) << endl;
 	
 	cout << "adding 123 1" << endl;
-	test.Add(123, 1);
-	cout << test.GetValue(123) << endl;
-	test.IncrementValue(123);
-	cout << test.GetValue(123) << endl;
+	hash.Add(123, 1);
+	cout << hash.GetValue(123) << endl;
+	hash.IncrementValue(123);
+	cout << hash.GetValue(123) << endl;
 
 	cout << "adding 289 1" << endl;
-	test.Add(289, 1);
-	cout << test.GetValue(289) << endl;
-	test.IncrementValue(289);
-	cout << test.GetValue(289) << endl;
+	hash.Add(289, 1);
+	cout << hash.GetValue(289) << endl;
+	hash.IncrementValue(289);
+	cout << hash.GetValue(289) << endl;
 
 	cout << "addin 12378 1" << endl;
-	test.Add(12378, 1);
-	cout << test.GetValue(12378) << endl;
-	test.IncrementValue(12378);
-	cout << test.GetValue(12378) << endl;
+	hash.Add(12378, 1);
+	cout << hash.GetValue(12378) << endl;
+	hash.IncrementValue(12378);
+	cout << hash.GetValue(12378) << endl;
 	
 	cout << "addin 100 1" << endl;
-	test.Add(100, 1);
-	cout << test.GetValue(100) << endl;
-	test.IncrementValue(100);
-	cout << test.GetValue(100) << endl;
+	hash.Add(100, 1);
+	cout << hash.GetValue(100) << endl;
+	hash.IncrementValue(100);
+	cout << hash.GetValue(100) << endl;
 
 	cout << "adding 666 1" << endl;
-	test.Add(666, 1);
-	cout << test.GetValue(666) << endl;
-	test.IncrementValue(666);
-	cout << test.GetValue(666) << endl;
+	hash.Add(666, 1);
+	cout << hash.GetValue(666) << endl;
+	hash.IncrementValue(666);
+	cout << hash.GetValue(666) << endl;*/
 
-	/*cout << "1 value before change: " << test.GetValue(1) << endl;
-	test.IncrementValue(1);
-	cout << "1 value after change: " << test.GetValue(1) << endl;*/
+	/*cout << "1 value before change: " << hash.GetValue(1) << endl;
+	hash.IncrementValue(1);
+	cout << "1 value after change: " << hash.GetValue(1) << endl;
+
+	system("pause");
+	return 0;*/
+
+
+
+
+	char* fileName = "D:\\Users\\Desktop\\1.txt";
+	char* fileNamå2 = "D:\\Users\\Desktop\\2.txt";
+	int allFilesNumber = 2;
+	/*char* fileNamå3 = "D:\\Users\\Desktop\\3.txt";*/
+
+	char* filenames[100];
+
+	filenames[0] = fileName;
+	filenames[1] = fileNamå2;
+	/*filenames[2] = fileNamå3;*/
+
+	ifstream file(fileName);
+	ifstream file2(fileNamå2);
+
+	int arr1[100];
+	int arr2[100];
+
+	int number = 0;	
+	int size1 = 0;
+	int size2 = 0;
+
+
+	cout << "putting numbers with 0: " << endl;
+	while (file >> number)
+	{
+		cout << number << " ";
+		hash.Add(number, 1);
+	}
+	cout << endl;
+
+	int zero = 0;
+	int one = 1;
+
+	int numbersFromFirstFile[100];
+	int numbfirstfilesize = 0;
+
+	ifstream file222(filenames[0]);
+	while (file222 >> number)
+	{
+		numbersFromFirstFile[numbfirstfilesize] = number;
+		numbfirstfilesize++;
+	}
+
+	int filenamessize = 2;
+	for (int i = 1; i < filenamessize; ++i)
+	{
+		ifstream file(filenames[i]);
+		cout << "for filename: " << filenames[i] << endl;
+		while (file >> number)
+		{
+			cout << number << " " << hash.GetValue(number) << endl;
+			if (hash.GetValue(number) > INT_MIN_VALUE)
+			{
+				hash.IncrementValue(number);
+			}
+		}
+	}
+
+	for (int i = 0; i < numbfirstfilesize; ++i)
+	{
+		cout << hash.GetValue(numbersFromFirstFile[i]);
+		cout << hash.GetValue(numbersFromFirstFile[i]);
+		cout << endl;
+	}
+
+
+
+	for (int i = 0; i < numbfirstfilesize; ++i)
+	{
+		if (hash.GetValue(numbersFromFirstFile[i]) > INT_MIN_VALUE)
+		{
+			cout << numbersFromFirstFile[i] << " ";
+		}
+	}
+	cout << endl;
+
+
+	cout << "INTERSECTION: " << endl;
+	for (int i = 0; i < numbfirstfilesize; ++i)
+	{
+		if (hash.GetValue(numbersFromFirstFile[i]) == allFilesNumber)
+		{
+			cout << numbersFromFirstFile[i] << " ";
+		}
+	}
+	cout << endl;
 
 	system("pause");
 	return 0;
-
-	//char* fileName = "D:\\Users\\Desktop\\1.txt";
-	//char* fileNamå2 = "D:\\Users\\Desktop\\2.txt";
-	///*char* fileNamå3 = "D:\\Users\\Desktop\\3.txt";*/
-
-	//char* filenames[100];
-
-	//filenames[0] = fileName;
-	//filenames[1] = fileNamå2;
-	///*filenames[2] = fileNamå3;*/
-
-	//ifstream file(fileName);
-	//ifstream file2(fileNamå2);
-
-	//int arr1[100];
-	//int arr2[100];
-
-	//int number = 0;	
-	//int size1 = 0;
-	//int size2 = 0;
-
-	//struct MyKeyHash {
-	//	unsigned long operator()(const int& k) const
-	//	{
-	//		return k % 10;
-	//	}
-	//};
-
-	//HashMap<int, int, MyKeyHash> hmap;
-
-	//cout << "putting numbers with 0: " << endl;
-	//while (file >> number)
-	//{
-	//	cout << number << " ";
-	//	hmap.put(number, 0);
-	//}
-	//cout << endl;
-
-	//int zero = 0;
-	//int one = 1;
-
-	//int numbersFromFirstFile[100];
-	//int numbfirstfilesize = 0;
-
-	//ifstream file222(filenames[0]);
-	//while (file222 >> number)
-	//{
-	//	numbersFromFirstFile[numbfirstfilesize] = number;
-	//	numbfirstfilesize++;
-	//}
-
-	//int filenamessize = 2;
-	////entries in hash: 1 12020 5 1238 10923 161283761
-	//for (int i = 1; i < filenamessize; ++i)
-	//{
-	//	ifstream file(filenames[i]);
-	//	cout << "for filename: " << filenames[i] << endl;
-	//	while (file >> number)
-	//	{
-	//		cout << number << " " << hmap.get(number, zero) << endl;
-	//		if (hmap.get(number, zero))
-	//		{
-	//			hmap.remove(number);
-	//			hmap.put(number, one);
-	//		}
-	//	}
-	//}
-
-	//for (int i = 0; i < numbfirstfilesize; ++i)
-	//{
-	//	cout << hmap.get(numbersFromFirstFile[i], one);
-	//	cout << hmap.get(numbersFromFirstFile[i], zero);
-	//	cout << endl;
-	//}
-
-
-
-	//for (int i = 0; i < numbfirstfilesize; ++i)
-	//{
-	//	if (hmap.get(numbersFromFirstFile[i], one))
-	//	{
-	//		cout << numbersFromFirstFile[i] << " ";
-	//	}
-	//}
-	//cout << endl;
-
-
-	//cout << "INTERSECTION: " << endl;
-	//for (int i = 0; i < numbfirstfilesize; ++i)
-	//{
-	//	if (hmap.get(numbersFromFirstFile[i], one))
-	//	{
-	//		cout << numbersFromFirstFile[i] << " ";
-	//	}
-	//}
-	//cout << endl;
-
-	/*system("pause");
-	return 0;*/
 }
 
