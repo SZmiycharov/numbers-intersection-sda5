@@ -133,82 +133,49 @@ int main(int argc, char* argv[])
 
 	char* fileName = "D:\\Users\\Desktop\\1.txt";
 	char* fileNamå2 = "D:\\Users\\Desktop\\2.txt";
-	int allFilesNumber = 2;
-	/*char* fileNamå3 = "D:\\Users\\Desktop\\3.txt";*/
+	char* fileNamå3 = "D:\\Users\\Desktop\\3.txt";
+	int allFilesNumber = 3;
 
 	char* filenames[100];
 
 	filenames[0] = fileName;
 	filenames[1] = fileNamå2;
-	/*filenames[2] = fileNamå3;*/
+	filenames[2] = fileNamå3;
 
 	ifstream file(fileName);
-	ifstream file2(fileNamå2);
-
-	int arr1[100];
-	int arr2[100];
 
 	int number = 0;	
 	int size1 = 0;
 	int size2 = 0;
+	int numbersFromFirstFile[100];
+	int numbfirstfilesize = 0;
 
-
-	cout << "putting numbers with 0: " << endl;
+	cout << "putting numbers with 1: " << endl;
 	while (file >> number)
 	{
 		cout << number << " ";
 		hash.Add(number, 1);
-	}
-	cout << endl;
-
-	int zero = 0;
-	int one = 1;
-
-	int numbersFromFirstFile[100];
-	int numbfirstfilesize = 0;
-
-	ifstream file222(filenames[0]);
-	while (file222 >> number)
-	{
 		numbersFromFirstFile[numbfirstfilesize] = number;
 		numbfirstfilesize++;
 	}
+	cout << endl;
 
-	int filenamessize = 2;
-	for (int i = 1; i < filenamessize; ++i)
+	for (int i = 1; i < allFilesNumber; ++i)
 	{
 		ifstream file(filenames[i]);
 		cout << "for filename: " << filenames[i] << endl;
 		while (file >> number)
 		{
-			cout << number << " " << hash.GetValue(number) << endl;
+			cout << number << " value:" << hash.GetValue(number) << endl;
 			if (hash.GetValue(number) > INT_MIN_VALUE)
 			{
 				hash.IncrementValue(number);
 			}
+			cout << number << " afterchange:" << hash.GetValue(number) << "\n\n";
 		}
 	}
 
-	for (int i = 0; i < numbfirstfilesize; ++i)
-	{
-		cout << hash.GetValue(numbersFromFirstFile[i]);
-		cout << hash.GetValue(numbersFromFirstFile[i]);
-		cout << endl;
-	}
-
-
-
-	for (int i = 0; i < numbfirstfilesize; ++i)
-	{
-		if (hash.GetValue(numbersFromFirstFile[i]) > INT_MIN_VALUE)
-		{
-			cout << numbersFromFirstFile[i] << " ";
-		}
-	}
-	cout << endl;
-
-
-	cout << "INTERSECTION: " << endl;
+	cout << "\n**************INTERSECTION**************: " << endl;
 	for (int i = 0; i < numbfirstfilesize; ++i)
 	{
 		if (hash.GetValue(numbersFromFirstFile[i]) == allFilesNumber)
