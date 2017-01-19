@@ -73,7 +73,35 @@ int* getIntersection(int* arr1, int* arr2, int size1, int size2, int &hashSize)
 
 int main(int argc, char* argv[])
 {
+	validateCmdParams(argc, argv);
+
 	LinearProbingHash hash(10007);
+
+	cout << "argv 1: " << argv[1] << endl;
+
+	int numberFiles = 0;
+	string fileName;
+	int arrSize = 0;
+	uint64_t numbersFromFile[10000];
+
+	assert(istringstream(argv[1]) >> numberFiles);
+
+	for (int i = 0; i < numberFiles; i++)
+	{
+		getline(cin, fileName);
+		cout << "file: " << fileName << endl;
+		readFromFile(fileName, numbersFromFile, arrSize);
+
+		for (int j = 0; j < arrSize; j++)
+		{
+			hash.Add(1, 5);
+		}
+	}
+
+	system("pause");
+	return 0;
+
+
 
 	/*cout << "adding 1 5" << endl;
 	hash.Add(1, 5);
@@ -131,7 +159,7 @@ int main(int argc, char* argv[])
 
 
 
-	char* fileName = "D:\\Users\\Desktop\\1.txt";
+	/*char* fileName = "D:\\Users\\Desktop\\1.txt";
 	char* fileNamå2 = "D:\\Users\\Desktop\\2.txt";
 	char* fileNamå3 = "D:\\Users\\Desktop\\3.txt";
 	int allFilesNumber = 3;
@@ -183,7 +211,7 @@ int main(int argc, char* argv[])
 			cout << numbersFromFirstFile[i] << " ";
 		}
 	}
-	cout << endl;
+	cout << endl;*/
 
 	system("pause");
 	return 0;

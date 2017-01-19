@@ -32,7 +32,7 @@ bool LinearProbingHash::Add(const int ID, const int Value)
 
 	while (pBuffer[i].id >= 0)
 	{
-		i = ((i + 1) * multiplier) % BufferSize;
+		i = (i + 1) % BufferSize;
 	}
 
 	pBuffer[i].id = ID;
@@ -55,7 +55,7 @@ bool LinearProbingHash::IncrementValue(const int ID)
 			return true;
 		}
 		else
-			i = ((i + 1) * multiplier) % BufferSize;
+			i = (i + 1) % BufferSize;
 	}
 
 	return false;
@@ -70,7 +70,7 @@ int LinearProbingHash::GetValue(const int ID)
 		if (pBuffer[i].id == ID)
 			return pBuffer[i].value;
 		else
-			i = ((i + 1) * multiplier) % BufferSize;
+			i = (i + 1) % BufferSize;
 	}
 
 	return INT_MIN_VALUE;
@@ -78,5 +78,5 @@ int LinearProbingHash::GetValue(const int ID)
 
 int LinearProbingHash::CalculateHash(const int ID)
 {
-	return ID * multiplier % BufferSize;
+	return ID % BufferSize;
 }
