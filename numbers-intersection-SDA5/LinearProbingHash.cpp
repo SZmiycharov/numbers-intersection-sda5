@@ -23,15 +23,17 @@ LinearProbingHash::~LinearProbingHash()
 	delete[] pBuffer;
 }
 
-bool LinearProbingHash::Add(const int ID, const int Value)
+bool LinearProbingHash::Add(const uint64_t ID, const int Value)
 {
 	if (ElementsCount >= BufferSize)
 		return false;
 
 	int i = CalculateHash(ID);
 
-	while (pBuffer[i].id >= 0)
+	while (pBuffer[i].id <= INT_MAX_VALUE)
 	{
+		std::cout << pBuffer[i].id << " ";
+		std::cout << INT_MAX_VALUE << " ";
 		i = (i + 1) % BufferSize;
 	}
 
@@ -43,11 +45,11 @@ bool LinearProbingHash::Add(const int ID, const int Value)
 	return true;
 }
 
-bool LinearProbingHash::IncrementValue(const int ID)
+bool LinearProbingHash::IncrementValue(const uint64_t ID)
 {
 	int i = CalculateHash(ID);
 
-	while (pBuffer[i].id >= 0)
+	while (pBuffer[i].id <= INT_MAX_VALUE)
 	{
 		if (pBuffer[i].id == ID)
 		{
@@ -61,11 +63,11 @@ bool LinearProbingHash::IncrementValue(const int ID)
 	return false;
 }
 
-int LinearProbingHash::GetValue(const int ID)
+uint64_t LinearProbingHash::GetValue(const uint64_t ID)
 {
 	int i = CalculateHash(ID);
 
-	while (pBuffer[i].id >= 0)
+	while (pBuffer[i].id <= INT_MAX_VALUE)
 	{
 		if (pBuffer[i].id == ID)
 			return pBuffer[i].value;
@@ -76,7 +78,7 @@ int LinearProbingHash::GetValue(const int ID)
 	return INT_MIN_VALUE;
 }
 
-int LinearProbingHash::CalculateHash(const int ID)
+int LinearProbingHash::CalculateHash(const uint64_t ID)
 {
 	return ID % BufferSize;
 }

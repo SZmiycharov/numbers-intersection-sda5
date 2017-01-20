@@ -1,7 +1,10 @@
 #pragma once
 
 #include <limits>
+#include <cstdint>
+
 const int INT_MIN_VALUE = std::numeric_limits<int>::min();
+const int INT_MAX_VALUE = std::numeric_limits<int>::max();
 const int multiplier = 2654435761;
 
 class ModularHashingFunction
@@ -22,17 +25,17 @@ public:
 	LinearProbingHash(size_t MaxSize);
 	~LinearProbingHash();
 
-	bool Add(const int ID, const int Value);
-	bool IncrementValue(const int ID);
-	int GetValue(const int ID);
+	bool Add(const uint64_t ID, const int Value);
+	bool IncrementValue(const uint64_t ID);
+	uint64_t GetValue(const uint64_t ID);
 
 private:
-	int CalculateHash(int ID);
+	int CalculateHash(uint64_t ID);
 	
 	struct bucket
 	{
-		int id;
-		int value;
+		uint64_t id;
+		uint64_t value;
 		bucket() : id(0), value(0) {};
 	};
 

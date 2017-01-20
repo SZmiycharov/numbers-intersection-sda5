@@ -17,86 +17,57 @@
 
 using namespace std;
 
-void quickSort(int(&arr)[100], int left, int right)
-{
-	int i = left, j = right;
-	int tmp;
-	int pivot = arr[(left + right) / 2];
-
-	while (i <= j)
-	{
-		while (arr[i] < pivot) i++;
-		while (arr[j] > pivot) j--;
-
-		if (i <= j)
-		{
-			tmp = arr[i];
-			arr[i] = arr[j];
-			arr[j] = tmp;
-			i++;
-			j--;
-		}
-	}
-
-	if (left < j)
-		quickSort(arr, left, j);
-	if (i < right)
-		quickSort(arr, i, right);
-}
-
-int* getIntersection(int* arr1, int* arr2, int size1, int size2, int &hashSize)
-{
-	int i = 0, j = 0;
-	int arr[100];
-
-	while (i < size1 && j < size2)
-	{
-		if (arr1[i] == arr2[j])
-		{
-			cout << arr1[i] << " HA: ";
-			arr[hashSize] = arr1[i];
-			++hashSize;
-			++i;
-			++j;
-		}
-		else if (arr1[i] > arr2[j])
-		{
-			++j;
-		}
-		else
-		{
-			++i;
-		}
-	}
-	return arr1;
-}
-
 int main(int argc, char* argv[])
 {
 	validateCmdParams(argc, argv);
 
 	LinearProbingHash hash(10007);
 
-	cout << "argv 1: " << argv[1] << endl;
-
 	int numberFiles = 0;
-	string fileName;
 	int arrSize = 0;
+	string fileName;
 	uint64_t numbersFromFile[10000];
 
 	assert(istringstream(argv[1]) >> numberFiles);
 
-	for (int i = 0; i < numberFiles; i++)
+	getline(cin, fileName);
+	fileToArray(fileName, numbersFromFile, arrSize);
+
+	for (int i = 0; i < arrSize; i++)
+	{
+		hash.Add(numbersFromFile[i], 1);
+	}
+
+	for (int i = 1; i < numberFiles; i++)
 	{
 		getline(cin, fileName);
-		cout << "file: " << fileName << endl;
-		readFromFile(fileName, numbersFromFile, arrSize);
+		fileToHash(fileName, numbersFromFile, hash);
+	}
 
-		for (int j = 0; j < arrSize; j++)
+	int currentValue = 0;
+	std::fstream writeFile;
+	writeFile.open("result.bin", std::fstream::binary | std::fstream::app);
+	if (!writeFile.is_open())
+	{
+		std::cerr << "Unable to open file " << "result.bin" << "\n";
+		exit(EXIT_FAILURE);
+	}
+
+	cout << "beginning of last cycle: " << endl;
+	for (int i = 0; i < arrSize; i++)
+	{
+		currentValue = hash.GetValue(numbersFromFile[i]);
+		if (currentValue == numberFiles)
 		{
-			hash.Add(1, 5);
+			uint64_t o = numbersFromFile[i];
+			writeFile.write((char*)&o, sizeof(o));
+			cout << " " << numbersFromFile[i] << " " << "sizeofnum: " << sizeof(numbersFromFile[i]);
 		}
 	}
+	cout << endl;
+	writeFile.close();
+
+	read("result.bin");
 
 	system("pause");
 	return 0;
