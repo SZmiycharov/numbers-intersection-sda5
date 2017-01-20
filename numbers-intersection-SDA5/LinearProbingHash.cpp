@@ -1,3 +1,17 @@
+/**
+*
+* Solution to homework task
+* Data Structures Course
+* Faculty of Mathematics and Informatics of Sofia University
+* Winter semester 2016/2017
+*
+* @author Stanislav Zmiycharov
+* @idnumber 61883
+* @task 5
+* @compiler VC
+*
+*/
+
 #include <iostream>
 
 #include "LinearProbingHash.h"
@@ -32,8 +46,6 @@ bool LinearProbingHash::Add(const uint64_t ID, const int Value)
 
 	while (pBuffer[i].id <= INT_MAX_VALUE)
 	{
-		std::cout << pBuffer[i].id << " ";
-		std::cout << INT_MAX_VALUE << " ";
 		i = (i + 1) % BufferSize;
 	}
 
