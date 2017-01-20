@@ -19,8 +19,9 @@
 #include <cstdlib>
 #include <cstdint>
 #include <algorithm>
-#include "LinearProbingHash.h"
+#include "Hash.h"
 
+//check if a number is given from console
 void validateCmdParams(int argc, char* argv[])
 {
 	if (argc != 2)
@@ -31,6 +32,7 @@ void validateCmdParams(int argc, char* argv[])
 	}
 }
 
+//fill array with entries from binary file
 void fileToArray(std::string fileName, uint64_t(&numbersFromFile)[10000], int &arrSize)
 {
 	std::fstream readFile;
@@ -54,7 +56,8 @@ void fileToArray(std::string fileName, uint64_t(&numbersFromFile)[10000], int &a
 	readFile.close();
 }
 
-void fileToHash(std::string fileName, uint64_t(&numbersFromFile)[10000], LinearProbingHash &hash)
+//increment value for every entry in filename to our hash
+void fileToHash(std::string fileName, uint64_t(&numbersFromFile)[10000], Hash &hash)
 {
 	std::fstream readFile;
 

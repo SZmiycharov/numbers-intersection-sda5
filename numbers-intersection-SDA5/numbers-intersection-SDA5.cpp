@@ -13,7 +13,6 @@
 */
 
 #include "HelperFunctions.h"
-#include "LinearProbingHash.h"
 
 using namespace std;
 
@@ -28,20 +27,26 @@ int main(int argc, char* argv[])
 
 	assert(istringstream(argv[1]) >> numberFiles);
 
+	/*
+	fill array with entries from first file; as we search for intersection,
+	this array is the most numbers we can get to the final answer
+	*/
 	getline(cin, fileName);
 	fileToArray(fileName, numbersFromFile, arrSize);
 
-	LinearProbingHash hash(arrSize + 1);
+	//no need for bigger size - we will not add any more numbers
+	Hash hashIntersection(arrSize + 1);
 
 	for (int i = 0; i < arrSize; i++)
 	{
-		hash.Add(numbersFromFile[i], 1);
+		hashIntersection.Add(numbersFromFile[i], 1);
 	}
 
 	for (int i = 1; i < numberFiles; i++)
 	{
 		getline(cin, fileName);
-		fileToHash(fileName, numbersFromFile, hash);
+		//increment value for every number that we meet
+		fileToHash(fileName, numbersFromFile, hashIntersection);
 	}
 
 	int currentValue = 0;
@@ -57,7 +62,8 @@ int main(int argc, char* argv[])
 
 	for (int i = 0; i < arrSize; i++)
 	{
-		currentValue = hash.GetValue(numbersFromFile[i]);
+		currentValue = hashIntersection.GetValue(numbersFromFile[i]);
+		//number was found in all files - its value equals the number of files
 		if (currentValue == numberFiles)
 		{
 			writeFile.write((char*)&numbersFromFile[i], sizeof(numbersFromFile[i]));
