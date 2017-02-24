@@ -60,6 +60,8 @@ void fileToArray(std::string fileName, uint64_t(&numbersFromFile)[10000], int &a
 void fileToHash(std::string fileName, uint64_t(&numbersFromFile)[10000], Hash &hash)
 {
 	std::fstream readFile;
+	int numbsFromFile[10000];
+	int arrSize = 0;
 
 	uint64_t num;
 
@@ -67,8 +69,14 @@ void fileToHash(std::string fileName, uint64_t(&numbersFromFile)[10000], Hash &h
 	if (readFile.is_open())
 	{
 		while (readFile.read((char*)&num, sizeof(num)))
-		{
-			hash.IncrementValue(num);
+		{	
+			if (std::find(std::begin(numbsFromFile), std::end(numbsFromFile), num) == std::end(numbsFromFile))
+			{
+				numbsFromFile[arrSize] = num;
+				arrSize++;
+				hash.IncrementValue(num);
+			}
+			
 		}
 	}
 	else

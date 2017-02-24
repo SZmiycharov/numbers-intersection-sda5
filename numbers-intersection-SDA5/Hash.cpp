@@ -39,6 +39,7 @@ bool Hash::Add(const uint64_t ID, const int Value)
 		return false;
 
 	int i = CalculateHash(ID);
+	std::cout << pBuffer[i].id << std::endl;
 
 	while (pBuffer[i].id <= INT_MAX_VALUE)
 	{
@@ -56,6 +57,8 @@ bool Hash::Add(const uint64_t ID, const int Value)
 bool Hash::IncrementValue(const uint64_t ID)
 {
 	int i = CalculateHash(ID);
+
+	
 
 	while (pBuffer[i].id <= INT_MAX_VALUE)
 	{
